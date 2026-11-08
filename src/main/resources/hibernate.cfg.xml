@@ -5,18 +5,13 @@
 <hibernate-configuration>
   <session-factory>
 
-    <!-- Koneksi ke database -->
-    <property name="jakarta.persistence.jdbc.url">jdbc:mysql://localhost:3306/db_perpustakaan</property>
-    <property name="jakarta.persistence.jdbc.user">root</property>
-    <property name="jakarta.persistence.jdbc.password"></property>
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db_perpustakaan</property>
+    <property name="hibernate.connection.username">root</property>
 
-    <!-- Tampilkan SQL di jendela Output (berguna untuk belajar) -->
     <property name="hibernate.show_sql">true</property>
-
-    <!-- none = Hibernate TIDAK boleh mengubah tabel (tabel dibuat dari script SQL) -->
     <property name="hibernate.hbm2ddl.auto">none</property>
 
-    <!-- Daftar class entity -->
     <mapping class="model.User"/>
     <mapping class="model.Buku"/>
     <mapping class="model.Anggota"/>
