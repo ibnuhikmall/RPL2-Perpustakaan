@@ -1,29 +1,26 @@
 package controller;
 
-import java.util.List;
+import dao.UserDao;
 import model.User;
-import org.hibernate.SessionFactory;
-import util.HibernateUtil;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class UserController {
 
-    private final SessionFactory sf = HibernateUtil.getFactory();
+    private final UserDao dao;
+
+    public UserController(UserDao dao) {
+        this.dao = dao;
+    }
 
     // Mengembalikan true jika username dan password benar
+    @Transactional(readOnly = true)
     public boolean login(String username, String password) {
-        // HQL tidak mengenal fungsi SHA2(), jadi login memakai native query (SQL biasa)
-        List<User> hasil = sf.fromSession(s ->
-                s.createNativeQuery(
-                        "SELECT * FROM users WHERE username = :u AND password = SHA2(:p, 256)",
-                        User.class)
-                 .setParameter("u", username)
-                 .setParameter("p", password)
-                 .getResultList());
-
-        if (hasil.isEmpty()) {
+        User u = dao.cariByLogin(username, password);
+        if (u == null) {
             return false;
         }
-        User u = hasil.get(0);
         Sesi.idUser = u.getIdUser();
         Sesi.nama = u.getNamaLengkap();
         Sesi.role = u.getRole();

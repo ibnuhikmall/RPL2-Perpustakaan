@@ -1,5 +1,6 @@
 package view;
 
+import util.AppContext;
 import controller.DashboardController;
 import controller.Sesi;
 import java.awt.BorderLayout;
@@ -37,6 +38,7 @@ public class MenuUtama extends JFrame {
 
     private JButton btnKelolaPengguna;
     private PanelBuku panelBuku;
+    private PanelAnggota panelAnggota;
 
     public MenuUtama() {
         initUI();
@@ -107,7 +109,10 @@ public class MenuUtama extends JFrame {
             panelBuku.muatData(); // data diperbarui setiap kali dibuka
             cardLayout.show(panelIsi, HAL_BUKU);
         });
-        btnAnggota.addActionListener(e -> cardLayout.show(panelIsi, HAL_ANGGOTA));
+        btnAnggota.addActionListener(e -> {
+            panelAnggota.muatData(); // data diperbarui setiap kali dibuka
+            cardLayout.show(panelIsi, HAL_ANGGOTA);
+        });
         btnTransaksi.addActionListener(e -> cardLayout.show(panelIsi, HAL_TRANSAKSI));
         btnLaporan.addActionListener(e -> cardLayout.show(panelIsi, HAL_LAPORAN));
         btnKelolaPengguna.addActionListener(e -> cardLayout.show(panelIsi, HAL_PENGGUNA));
@@ -159,7 +164,8 @@ public class MenuUtama extends JFrame {
         panelIsi.add(panelBuku, HAL_BUKU);
 
         // Halaman sementara. Nanti diganti dengan panel asli.
-        panelIsi.add(buatPanelSementara("Data Anggota"), HAL_ANGGOTA);
+        panelAnggota = new PanelAnggota();
+        panelIsi.add(panelAnggota, HAL_ANGGOTA);
         panelIsi.add(buatPanelSementara("Peminjaman dan Pengembalian"), HAL_TRANSAKSI);
         panelIsi.add(buatPanelSementara("Laporan"), HAL_LAPORAN);
         panelIsi.add(buatPanelSementara("Kelola Pengguna"), HAL_PENGGUNA);
@@ -232,7 +238,7 @@ public class MenuUtama extends JFrame {
     // ===== Mengisi angka dashboard dari database =====
     private void muatDashboard() {
         try {
-            DashboardController dc = new DashboardController();
+            DashboardController dc = AppContext.getBean(DashboardController.class);
             lblJmlBuku.setText(String.valueOf(dc.jumlahBuku()));
             lblJmlAnggota.setText(String.valueOf(dc.jumlahAnggota()));
             lblJmlDipinjam.setText(String.valueOf(dc.jumlahDipinjam()));

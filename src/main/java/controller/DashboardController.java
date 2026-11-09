@@ -1,31 +1,35 @@
 package controller;
 
-import org.hibernate.SessionFactory;
-import util.HibernateUtil;
+import dao.DashboardDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class DashboardController {
 
-    private final SessionFactory sf = HibernateUtil.getFactory();
+    private final DashboardDao dao;
 
+    public DashboardController(DashboardDao dao) {
+        this.dao = dao;
+    }
+
+    @Transactional(readOnly = true)
     public int jumlahBuku() {
-        return hitung("select count(b) from Buku b");
+        return (int) dao.jumlahBuku();
     }
 
+    @Transactional(readOnly = true)
     public int jumlahAnggota() {
-        return hitung("select count(a) from Anggota a");
+        return (int) dao.jumlahAnggota();
     }
 
+    @Transactional(readOnly = true)
     public int jumlahDipinjam() {
-        return hitung("select count(p) from Peminjaman p where p.status = 'Dipinjam'");
+        return (int) dao.jumlahDipinjam();
     }
 
+    @Transactional(readOnly = true)
     public int jumlahTerlambat() {
-        return hitung("select count(p) from Peminjaman p "
-                    + "where p.status = 'Dipinjam' and p.tglJatuhTempo < current_date");
-    }
-
-    // Menjalankan query count dan mengembalikan angkanya
-    private int hitung(String hql) {
-        return sf.fromSession(s -> s.createQuery(hql, Long.class).getSingleResult().intValue());
+        return (int) dao.jumlahTerlambat();
     }
 }

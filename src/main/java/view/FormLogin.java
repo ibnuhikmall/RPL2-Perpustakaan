@@ -1,5 +1,6 @@
 package view;
 
+import util.AppContext;
 import controller.UserController;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -105,7 +106,7 @@ public class FormLogin extends JFrame {
         }
 
         try {
-            UserController uc = new UserController();
+            UserController uc = AppContext.getBean(UserController.class);
             if (uc.login(user, pass)) {
                 new MenuUtama().setVisible(true);
                 this.dispose();
@@ -122,6 +123,7 @@ public class FormLogin extends JFrame {
 
     // ===== Titik awal program =====
     public static void main(String[] args) {
+        AppContext.start();
         java.awt.EventQueue.invokeLater(() -> new FormLogin().setVisible(true));
     }
 }

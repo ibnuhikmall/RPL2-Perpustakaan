@@ -1,5 +1,6 @@
 package view;
 
+import util.AppContext;
 import controller.BukuController;
 import java.awt.*;
 import java.util.List;
@@ -15,7 +16,7 @@ public class PanelBuku extends JPanel {
                                            "Tahun Terbit", "Kategori", "Stok"};
     private static final int[] LEBAR = {12, 20, 20, 20, 8, 15, 8};
 
-    private final BukuController bc = new BukuController();
+    private final BukuController bc = AppContext.getBean(BukuController.class);
     private final JTextField[] isian = new JTextField[7]; // 7 kolom isian pada form
     private final JTextField txtCari = new JTextField(25);
     private final JButton btnSimpan = new JButton("Simpan"), btnUbah = new JButton("Ubah"),
