@@ -39,6 +39,7 @@ public class MenuUtama extends JFrame {
     private JButton btnKelolaPengguna;
     private PanelBuku panelBuku;
     private PanelAnggota panelAnggota;
+    private PanelLaporan panelLaporan;
 
     public MenuUtama() {
         initUI();
