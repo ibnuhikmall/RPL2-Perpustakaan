@@ -115,7 +115,7 @@ public class MenuUtama extends JFrame {
             cardLayout.show(panelIsi, HAL_ANGGOTA);
         });
         btnTransaksi.addActionListener(e -> cardLayout.show(panelIsi, HAL_TRANSAKSI));
-        btnLaporan.addActionListener(e -> cardLayout.show(panelIsi, HAL_LAPORAN));
+        btnLaporan.addActionListener(e -> {cardLayout.show(panelIsi, HAL_LAPORAN);});
         btnKelolaPengguna.addActionListener(e -> cardLayout.show(panelIsi, HAL_PENGGUNA));
 
         menu.add(btnDashboard);
@@ -168,7 +168,7 @@ public class MenuUtama extends JFrame {
         panelAnggota = new PanelAnggota();
         panelIsi.add(panelAnggota, HAL_ANGGOTA);
         panelIsi.add(buatPanelSementara("Peminjaman dan Pengembalian"), HAL_TRANSAKSI);
-        panelIsi.add(buatPanelSementara("Laporan"), HAL_LAPORAN);
+        panelLaporan = new PanelLaporan();panelIsi.add(panelLaporan, HAL_LAPORAN);
         panelIsi.add(buatPanelSementara("Kelola Pengguna"), HAL_PENGGUNA);
 
         cardLayout.show(panelIsi, HAL_DASHBOARD);
